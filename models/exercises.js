@@ -1,0 +1,16 @@
+const exercisesSchema = new Schema({
+  title: { type: String, required: true },
+  instruction: { type: String, required: true },
+  options: [{ type: String, required: true }], 
+  answer: { 
+    type: Number, 
+    required: true,
+    validate: {
+      validator: function(v) {
+        return v >= 0 && v < this.options.length;
+      },
+      message: props => `El índice ${props.value} no es válido`
+    }
+  }
+});
+module.exports = mongoose.model('Exercise', exercisesSchema);
