@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const db_url = process.env.DB_PASSWORD;
+const db_url = process.env.DB_URL;
 
 const options = {
     useNewUrlParser: true,
