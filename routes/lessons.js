@@ -8,3 +8,5 @@ router.get('/:id',verificarToken, lessonsController.getLessonById); // Route to 
 router.post('/', lessonsController.createLesson); // Route to create a new lesson
 router.put('/:id',verificarToken, lessonsController.updateLesson); // Route to update a lesson 
 router.delete('/:id',verificarToken, lessonsController.deleteLesson); // Route to delete a lesson
+
+module.exports = router;

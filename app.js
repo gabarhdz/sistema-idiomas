@@ -3,6 +3,7 @@ const app = express();
 const connectDB = require('./config/db');
 const usersRouter = require('./routes/users');
 const exercisesRouter = require('./routes/exercises');
+const lessonsRouter = require('./routes/lessons');
 connectDB();
 
 
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', usersRouter);  
 app.use('/api/exercises', exercisesRouter);
+app.use('/api/lessons', lessonsRouter);
 
 const PORT = 3000;
 app.listen(PORT, () => {
