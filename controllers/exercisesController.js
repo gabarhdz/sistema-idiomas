@@ -1,4 +1,4 @@
-const Exercise = require('../models/exercise');
+const Exercise = require('../models/exercises');
 const jwt = require('jsonwebtoken');
 
 exports.getExercises = async (req, res) => {

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/usersController');
+const verificarToken = require('../security/auth');
 
 // Route to get all users
 router.get('/', usersController.getUsers); 

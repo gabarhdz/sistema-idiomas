@@ -1,3 +1,4 @@
+const { Schema, model, Types } = require('mongoose');
 const exercisesSchema = new Schema({
   title: { type: String, required: true },
   instruction: { type: String, required: true },
@@ -13,4 +14,5 @@ const exercisesSchema = new Schema({
     }
   }
 });
-module.exports = mongoose.model('Exercise', exercisesSchema);
+
+module.exports = model('Exercise', exercisesSchema);
