@@ -1,5 +1,5 @@
 const Usuario = require('../models/user');
-
+require('dotenv').config();
 
 exports.getUsers = async (req, res) => {
   try {
@@ -88,9 +88,9 @@ exports.login = async (req, res) => {
     }
     
     // 3. Credenciales válidas: Generar token JWT
-    const datosToken = { id: usuario._id };            // Podemos incluir datos en el token (p.ej. el ID de usuario)
-    const secreto = 'SECRETO_SUPER_SEGUR0';            // Clave secreta para firmar el token (en producción, mantener en una variable de entorno)
-    const opciones = { expiresIn: '1h' };              // El token expirará en 1 hora
+    const datosToken = { id: usuario._id };            
+    const secreto = process.env.SECRETO;       
+    const opciones = { expiresIn: '1h' };     
     const token = jwt.sign(datosToken, secreto, opciones);
     
     // 4. Enviar el token al cliente
