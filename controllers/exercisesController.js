@@ -21,11 +21,12 @@ exports.getExercisesById = async (req, res) => {
 }
 
 exports.createExercise = async (req, res) => {
-  const { title,instruction,options,answer} = req.body;
+  const { title, instruction, options, answer } = req.body;
 
-  if (!title || !instruction || !options || options.length === 0, answer === undefined  ) {
+  // Corregir la validación (había una coma en lugar de &&)
+  if (!title || !instruction || !options || options.length === 0 || answer === undefined) {
     return res.status(400).json({ 
-      message: 'Los campos title, description, duration son obligatorios' 
+      message: 'Los campos title, instruction, options y answer son obligatorios' 
     });
   }
 
@@ -34,15 +35,20 @@ exports.createExercise = async (req, res) => {
       title, 
       instruction,
       options,
-      answer
+      answer,
+      user: req.usuarioId // Usar el ID del usuario del JWT
     });
+    
     await newExercise.save();
+    
+    // Opcional: hacer populate para devolver la información del usuario
+    await newExercise.populate('user', 'name surname email');
+    
     res.status(201).json(newExercise);
   } catch (error) {
     res.status(500).json({ message: 'Error al crear el ejercicio', error });
   }
 }
-
 exports.updateExercise = async (req, res) => {
   const { id } = req.params;
   const { title, instruction, options, answer } = req.body;
