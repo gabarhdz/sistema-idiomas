@@ -82,21 +82,22 @@ exports.updateLesson = async (req, res) => {
   }
 }
 
-exports.delteteLesson = async (req, res) => {
+exports.deleteLesson = async (req, res) => {
   const { id } = req.params;
 
   try {
     const selectedLesson = await Lesson.findById(id);
-    if (selectedLesson.user.toString() === req.usuarioId) {
-        const deletedLesson = await Lesson.findByIdAndDelete(id);
-        res.status(200).json({ message: 'Lección eliminada correctamente' });
-    }
-
+    
     if (!selectedLesson) {
       return res.status(404).json({ message: 'Lección no encontrada' });
     }
 
-    return res.status(403).json({ message: 'No tienes permiso para eliminar esta lección ya que no eres el creador de la misma' });
+    if (selectedLesson.user.toString() !== req.usuarioId) {
+      return res.status(403).json({ message: 'No tienes permiso para eliminar esta lección ya que no eres el creador de la misma' });
+    }
+
+    await Lesson.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Lección eliminada correctamente' });
     
   } catch (error) {
     res.status(500).json({ message: 'Error al eliminar la lección', error });
