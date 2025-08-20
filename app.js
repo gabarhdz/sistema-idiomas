@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const connectDB = require('./config/db');
 const usersRouter = require('./routes/users');
 const exercisesRouter = require('./routes/exercises');
@@ -8,6 +9,8 @@ connectDB();
 
 
 app.use(express.json()); 
+
+app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.send('Hello, world!');
 }); 
