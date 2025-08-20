@@ -41,9 +41,6 @@ exports.createExercise = async (req, res) => {
     
     await newExercise.save();
     
-    // Opcional: hacer populate para devolver la información del usuario
-    await newExercise.populate('user', 'name surname email');
-    
     res.status(201).json(newExercise);
   } catch (error) {
     res.status(500).json({ message: 'Error al crear el ejercicio', error });
