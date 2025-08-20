@@ -1,11 +1,8 @@
-const express = require('express');
-const app = express();
 const Usuario = require('../models/users');
-const usersRouter = require('./routes/users');
+const bcrypt = require('bcrypt'); 
+const jwt = require('jsonwebtoken'); 
 require('dotenv').config();
 
-app.use(express.json());
-app.use('/api/users', usersRouter);
 
 exports.getUsers = async (req, res) => {
   try {
@@ -17,11 +14,27 @@ exports.getUsers = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
+
+  console.log('req.body:', req.body);
+  
   const { name, surname, profile_image, email, password } = req.body;
+  
+  if (!name || !surname || !email || !password) {
+    return res.status(400).json({ 
+      message: 'Los campos name, surname, email y password son obligatorios' 
+    });
+  }
+
   try {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    const newUser = new Usuario({ name, surname, email, profile_image, password: hash });
+    const newUser = new Usuario({ 
+      name, 
+      surname, 
+      email, 
+      profile_image, 
+      password: hash 
+    });
     await newUser.save();
     res.status(201).json(newUser);
   } catch (error) {
@@ -80,26 +93,25 @@ exports.deleteUser = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { email, clave } = req.body;
+    const { email, password } = req.body;
 
-    // 1. Buscar al usuario por email
+
     const usuario = await Usuario.findOne({ email });
     if (!usuario) {
-      return res.status(401).json({ error: 'Credenciales inválidas' }); // No se encontró el email
-    }
-    // 2. Verificar la contraseña con bcrypt.compare
-    const passwordOk = await bcrypt.compare(clave, usuario.clave);
-    if (!passwordOk) {
-      return res.status(401).json({ error: 'Credenciales inválidas' }); // Contraseña incorrecta
+      return res.status(401).json({ error: 'Credenciales inválidas' });
     }
 
-    // 3. Credenciales válidas: Generar token JWT
+    const passwordOk = await bcrypt.compare(password, usuario.password);
+    if (!passwordOk) {
+      return res.status(401).json({ error: 'Credenciales inválidas' });
+    }
+
     const datosToken = { id: usuario._id };
     const secreto = process.env.SECRETO;
     const opciones = { expiresIn: '1h' };
     const token = jwt.sign(datosToken, secreto, opciones);
 
-    // 4. Enviar el token al cliente
+
     res.json({ token });
   } catch (error) {
     res.status(500).json({ error: 'Error en el servidor' });
