@@ -8,8 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body
-    class="bg-gradient-to-br from-pink-500 via-fuchsia-500 to-purple-600 min-h-screen flex items-center justify-center">
+<body class="bg-gradient-to-br from-pink-500 via-fuchsia-500 to-purple-600 min-h-screen">
     <header class="bg-fuchsia-700 bg-opacity-90 shadow-lg py-4 px-8 flex justify-between items-center">
         <a href="home.html" class="text-2xl font-extrabold text-white hover:text-pink-200 transition">Luodingo</a>
         <nav class="flex gap-6">
@@ -18,19 +17,22 @@
             <a href="exercises.html" class="text-white font-semibold hover:text-pink-200 transition">Ejercicios</a>
         </nav>
     </header>
-    <div class="bg-white bg-opacity-90 rounded-3xl shadow-2xl p-10 max-w-md w-full text-center">
-        <h1 class="text-4xl font-extrabold text-fuchsia-700 mb-6">Bienvenido a Luodingo</h1>
-        <div class="flex flex-col gap-6">
-            <a href="lessons.html"
-                class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold py-4 rounded-xl shadow transition duration-200">
-                Administrar lecciones
-            </a>
-            <a href="exercises.html"
-                class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 rounded-xl shadow transition duration-200">
-                Administrar ejercicios
-            </a>
+
+    <main class="flex items-center justify-center min-h-[calc(100vh-80px)] py-8">
+        <div class="bg-white bg-opacity-90 rounded-3xl shadow-2xl p-10 max-w-md w-full text-center mx-4">
+            <h1 class="text-4xl font-extrabold text-fuchsia-700 mb-6">Bienvenido a Luodingo</h1>
+            <div class="flex flex-col gap-6">
+                <a href="lessons.html"
+                    class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-bold py-4 rounded-xl shadow transition duration-200">
+                    Administrar lecciones
+                </a>
+                <a href="exercises.html"
+                    class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 rounded-xl shadow transition duration-200">
+                    Administrar ejercicios
+                </a>
+            </div>
         </div>
-    </div>
+    </main>
 </body>
 
 </html>
